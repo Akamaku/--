@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>バス放送システム</title>
+  <title>バス放送システム - 音量ブースト版</title>
   <style>
     @font-face {
       font-family: 'DisplayFreeTFB';
@@ -50,7 +50,7 @@
       border-radius: 50%; border: none;
       color: #fff; font-size: 11px; cursor: pointer;
       position: absolute; 
-      bottom: 145px; /* 配置場所は維持 */
+      bottom: 145px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
     .btn-back-manual { background: #555; left: 100px; }
@@ -80,12 +80,8 @@
 
   <script>
     let routeData = {
-      "109": [       
-        "0-KT03 往路.wav", "1-KT03 往路.wav", "2-KT03 往路.wav", "3-KT03 往路.wav", "4-KT03 往路.wav",
-      ],
-      "110": [       
-        "0-KT03 復路.wav", "1-KT03 復路.wav", "2-KT03 復路.wav", "3-KT03 復路.wav", "4-KT03 復路.wav"
-      ],
+      "109": ["0-KT03 往路.wav", "1-KT03 往路.wav", "2-KT03 往路.wav", "3-KT03 往路.wav", "4-KT03 往路.wav"],
+      "110": ["0-KT03 復路.wav", "1-KT03 復路.wav", "2-KT03 復路.wav", "3-KT03 復路.wav", "4-KT03 復路.wav"],
       "181": [
         "181確認.flac", "00-田原台往路.wav", "01-田原台往路.wav", "02-田原台往路.wav", "03-田原台往路.wav",
         "04-田原台往路.wav", "05-田原台往路.wav", "06-田原台往路.wav", "07-田原台往路.wav", "08-田原台往路.wav",
@@ -94,35 +90,51 @@
         "19-田原台往路.wav", "20-田原台往路.wav", "21-田原台往路.wav", "22-田原台往路.wav", "23-田原台往路.wav",
         "24-田原台往路.wav", "25-田原台往路.wav"
       ],
-      "801": [       
-        "0-直通K03復路.wav", "1-直通K03復路.wav", "2-直通K03復路.wav", "3-直通K03復路.wav", "4-直通K03復路.wav"
-      ],
-       "260": [       
-        "0-直通22.m4a", "1-直通22.wav"
-      ],
-       "991": [       
+      "801": ["0-直通K03復路.wav", "1-直通K03復路.wav", "2-直通K03復路.wav", "3-直通K03復路.wav", "4-直通K03復路.wav"],
+      "260": ["0-直通22.m4a", "1-直通22.wav"],
+      "991": [
         "00-新町線往路.wav", "01-新町線往路.wav", "02-新町線往路.wav", "03-新町線往路.wav", "04-新町線往路.wav",
-        "05-新町線往路.wav", "06-新町線往路.wav", "07-新町線往路.wav", "08-新町線往路.wav", "09-新町線往路.wav"
-        ,"10-新町線往路.wav", "11-新町線往路.wav", "12-新町線往路.wav", "13-新町線往路.wav", "14-新町線往路.wav"
-        ,"15-新町線往路.wav", "16-新町線往路.wav", "17-新町線往路.wav", "18-新町線往路.wav", "19-新町線往路.wav"
-        ,"20-新町線往路.wav", "21-新町線往路.wav", "22-新町線往路.wav", "23-新町線往路.wav", "24-新町線往路.wav"
-        ,"25-新町線往路.wav", "26-新町線往路.wav", "27-新町線往路.wav", "28-新町線往路.wav", "29-新町線往路.wav"
-        ,"30-新町線往路.wav", "31-新町線往路.wav", "32-新町線往路.wav", "33-新町線往路.wav", "34-新町線往路.wav"
-        ,"35-新町線往路.wav", "36-新町線往路.wav", "37-新町線往路.wav", "38-新町線往路.wav", "39-新町線往路.wav"
-        ,"40-新町線往路.wav", "41-新町線往路.wav", "42-新町線往路.wav", "43-新町線往路.wav", "44-新町線往路.wav"
-        ,"45-新町線往路.wav", "46-新町線往路.wav", "47-新町線往路.wav", "48-新町線往路.wav", "49-新町線往路.wav"
-        ,"50-新町線往路.wav", "51-新町線往路.wav", "52-新町線往路.wav", "53-新町線往路.wav", "54-新町線往路.wav"
-        ,"55-新町線往路.wav", "56-新町線往路.wav", "57-新町線往路.wav", "58-新町線往路.wav", "59-新町線往路.wav"
-        ,"60-新町線往路.wav", "61-新町線往路.wav", "62-新町線往路.wav", "63-新町線往路.wav", "64-新町線往路.wav"
-        ,"65-新町線往路.wav", "66-新町線往路.wav", "67-新町線往路.wav", "68-新町線往路.wav", "69-新町線往路.wav"
-        ,"70-新町線往路.wav", "71-新町線往路.wav"
+        "05-新町線往路.wav", "06-新町線往路.wav", "07-新町線往路.wav", "08-新町線往路.wav", "09-新町線往路.wav",
+        "10-新町線往路.wav", "11-新町線往路.wav", "12-新町線往路.wav", "13-新町線往路.wav", "14-新町線往路.wav",
+        "15-新町線往路.wav", "16-新町線往路.wav", "17-新町線往路.wav", "18-新町線往路.wav", "19-新町線往路.wav",
+        "20-新町線往路.wav", "21-新町線往路.wav", "22-新町線往路.wav", "23-新町線往路.wav", "24-新町線往路.wav",
+        "25-新町線往路.wav", "26-新町線往路.wav", "27-新町線往路.wav", "28-新町線往路.wav", "29-新町線往路.wav",
+        "30-新町線往路.wav", "31-新町線往路.wav", "32-新町線往路.wav", "33-新町線往路.wav", "34-新町線往路.wav",
+        "35-新町線往路.wav", "36-新町線往路.wav", "37-新町線往路.wav", "38-新町線往路.wav", "39-新町線往路.wav",
+        "40-新町線往路.wav", "41-新町線往路.wav", "42-新町線往路.wav", "43-新町線往路.wav", "44-新町線往路.wav",
+        "45-新町線往路.wav", "46-新町線往路.wav", "47-新町線往路.wav", "48-新町線往路.wav", "49-新町線往路.wav",
+        "50-新町線往路.wav", "51-新町線往路.wav", "52-新町線往路.wav", "53-新町線往路.wav", "54-新町線往路.wav",
+        "55-新町線往路.wav", "56-新町線往路.wav", "57-新町線往路.wav", "58-新町線往路.wav", "59-新町線往路.wav",
+        "60-新町線往路.wav", "61-新町線往路.wav", "62-新町線往路.wav", "63-新町線往路.wav", "64-新町線往路.wav",
+        "65-新町線往路.wav", "66-新町線往路.wav", "67-新町線往路.wav", "68-新町線往路.wav", "69-新町線往路.wav",
+        "70-新町線往路.wav", "71-新町線往路.wav"
       ]
     };
 
     let currentRoute = [];
     let currentIndex = -2;
     let currentSystemNum = "";
+
+    // --- Web Audio API による増幅設定 ---
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    let audioCtx;
     let player = new Audio();
+    let source;
+    let gainNode;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new AudioContext();
+        source = audioCtx.createMediaElementSource(player);
+        gainNode = audioCtx.createGain();
+        gainNode.gain.value = 3.0; // 300% 増幅
+        source.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
 
     function updateDisplay() {
       const displayElement = document.getElementById("display");
@@ -132,6 +144,7 @@
     }
 
     function setRoute() {
+      initAudio(); // 音声コンテキストの初期化
       const id = document.getElementById("routeIn").value.trim();
       if (routeData[id]) {
         player.pause();
@@ -147,9 +160,10 @@
     }
 
     function next() {
+      initAudio(); // ブラウザ制約対策
       if (currentRoute.length === 0) return;
 
-      // 181番限定スキップ処理 (再生中の場合)
+      // 181番限定スキップ処理
       if (currentSystemNum === "181" && !player.paused) {
         if (currentIndex === 1 || currentIndex === 8) {
           if (currentIndex < currentRoute.length - 2) {
@@ -161,7 +175,6 @@
         }
       }
 
-      // 通常の進行（停止中であれば次の放送に進む）
       if (currentIndex < currentRoute.length - 1) {
         currentIndex++;
         updateDisplay();
@@ -211,7 +224,6 @@
       if (e.key === "Enter") { e.preventDefault(); next(); }
       if (e.key === "Backspace") { e.preventDefault(); prev(); }
       if (e.key === " ") { e.preventDefault(); stopBroadcasting(); }
-      // 数字キーによる啓発放送のイベントリスナーも削除
     });
   </script>
 </body>
