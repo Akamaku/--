@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>バス放送システム - 音量ブースト版</title>
+  <title>バス放送システム - 音量300%＆特定ループ版</title>
   <style>
     @font-face {
       font-family: 'DisplayFreeTFB';
@@ -86,7 +86,7 @@
         "181確認.flac", "00-田原台往路.wav", "01-田原台往路.wav", "02-田原台往路.wav", "03-田原台往路.wav",
         "04-田原台往路.wav", "05-田原台往路.wav", "06-田原台往路.wav", "07-田原台往路.wav", "08-田原台往路.wav",
         "09-田原台往路.wav", "10-田原台往路.wav", "11-田原台往路.wav", "12-田原台往路.wav", "13-田原台往路.wav",
-        "14-田原台往路.wav", "15-田原台往路.wav", "16-田原台往路.wav", "17-田原台往路.wav", "18-田原台往路.wav",
+        "14-田田原台往路.wav", "15-田原台往路.wav", "16-田原台往路.wav", "17-田原台往路.wav", "18-田原台往路.wav",
         "19-田原台往路.wav", "20-田原台往路.wav", "21-田原台往路.wav", "22-田原台往路.wav", "23-田原台往路.wav",
         "24-田原台往路.wav", "25-田原台往路.wav"
       ],
@@ -115,7 +115,6 @@
     let currentIndex = -2;
     let currentSystemNum = "";
 
-    // --- Web Audio API による増幅設定 ---
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     let audioCtx;
     let player = new Audio();
@@ -127,13 +126,11 @@
         audioCtx = new AudioContext();
         source = audioCtx.createMediaElementSource(player);
         gainNode = audioCtx.createGain();
-        gainNode.gain.value = 3.0; // 300% 増幅
+        gainNode.gain.value = 3.0; // 音量を300%に設定
         source.connect(gainNode);
         gainNode.connect(audioCtx.destination);
       }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
+      if (audioCtx.state === 'suspended') audioCtx.resume();
     }
 
     function updateDisplay() {
@@ -144,10 +141,11 @@
     }
 
     function setRoute() {
-      initAudio(); // 音声コンテキストの初期化
+      initAudio();
       const id = document.getElementById("routeIn").value.trim();
       if (routeData[id]) {
         player.pause();
+        player.loop = false; // ループ解除
         currentSystemNum = id;
         currentRoute = routeData[id];
         currentIndex = -1;
@@ -160,10 +158,10 @@
     }
 
     function next() {
-      initAudio(); // ブラウザ制約対策
+      initAudio();
       if (currentRoute.length === 0) return;
 
-      // 181番限定スキップ処理
+      // 181番限定スキップ
       if (currentSystemNum === "181" && !player.paused) {
         if (currentIndex === 1 || currentIndex === 8) {
           if (currentIndex < currentRoute.length - 2) {
@@ -195,6 +193,7 @@
     function stopBroadcasting() {
       if (player) {
         player.pause();
+        player.loop = false; // 停止時はループを解除
         player.onended = null;
       }
     }
@@ -209,7 +208,14 @@
 
     function play(fileName) {
       player.pause();
-      player.onended = null; 
+      player.onended = null;
+      player.loop = false; // 基本はループなし
+
+      // 【追加】109, 110番のインデックス1（1-*.wav）をループ
+      if ((currentSystemNum === "109" || currentSystemNum === "110") && currentIndex === 1) {
+        player.loop = true;
+      }
+
       player.src = `voice/${fileName}`;
       player.load();
       setAutoNext();
